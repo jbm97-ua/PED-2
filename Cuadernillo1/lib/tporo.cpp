@@ -80,13 +80,25 @@ TPoro& TPoro::operator=(const TPoro &poro){ //por referencia para conseguir rapi
 }
 
 //Sobrecarga del operador igualdad
-bool TPoro::operator==(const TPoro &){ 
-	return true;
+bool TPoro::operator==(const TPoro &poro){ 
+	bool equal=false;
+
+	if(this->x==poro.x && this->y==poro.y && this->volumen==poro.volumen && this->color==poro.color){
+		equal=true;
+	}
+
+	return equal;
 }
 
 //Sobrecarga del operador desigualdad
-bool TPoro::operator!=(const TPoro &){ 
-	return false;
+bool TPoro::operator!=(const TPoro &poro){ 
+	bool diferent=false;
+
+	if(this->x!=poro.x || this->y!=poro.y || this->volumen!=poro.volumen || this->color!=poro.color){
+		diferent=true;
+	}
+
+	return diferent;
 }
 
 //Modifica el color

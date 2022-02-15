@@ -37,7 +37,7 @@ class TPoro{
 		//Devuelve el volumen
 		double Volumen() const{ return volumen; }
 		//Devuelve el color
-		char * Color() const{ return color; }
+		char* Color() const{ return color; }
 		bool EsVacio() const; //Devuelve cierto si el poro está vacío
 };
 
