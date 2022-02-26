@@ -1,6 +1,5 @@
 //Jose Burgos Miras
 //tporo.cpp
-
 #include "tporo.h"
 
 //Constructor por defecto

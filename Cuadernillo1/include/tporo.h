@@ -1,3 +1,4 @@
+//Jose Burgos Miras
 //tporo.h (declaracion de la clase)
 #ifndef _TPORO_H_
 #define _TPORO_H_
@@ -42,5 +43,3 @@ class TPoro{
 };
 
 #endif
-
-//const en 4º destructor -> (TPoro(const TPoro &);)
