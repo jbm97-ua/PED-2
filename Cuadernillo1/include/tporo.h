@@ -27,7 +27,7 @@ class TPoro{
 		bool operator==(const TPoro &); //Sobrecarga del operador igualdad
 		bool operator!=(const TPoro &); //Sobrecarga del operador desigualdad
 		//Modifica la posición
-		void Posicion(int a, int b){ x=a; b=y; }
+		void Posicion(int a, int b){ x=a; y=b; }
 		// Modifica el volumen
 		void Volumen(double vol){ volumen=vol; }
 		void Color(char *col); //Modifica el color

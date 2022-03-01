@@ -68,7 +68,7 @@ TVectorPoro& TVectorPoro::operator=(const TVectorPoro &vporo){
 
 //Sobrecarga del operador igualdad
 bool TVectorPoro::operator==(const TVectorPoro &){
-
+	
 	return true;
 }
 

@@ -138,3 +138,16 @@ ostream& operator<<(ostream &os, TPoro &poro){
 	
 	return os;
 }
+
+/*
+tad01 -> OK
+tad02 -> OK
+tad03 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad04 -> OK
+tad05 -> OK
+tad06 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad07 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad08 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad09 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad10 -> OK
+*/
