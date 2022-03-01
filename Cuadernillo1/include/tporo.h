@@ -21,7 +21,7 @@ class TPoro{
 		TPoro(); //Constructor por defecto
 		TPoro(int, int, double); //Constructor a partir de una posicion y un volumen
 		TPoro(int, int, double, char *); //Constructor desde de una posicion, un volumen y un color
-		TPoro(const TPoro &orig); //Constructor de copia
+		TPoro(const TPoro &); //Constructor de copia
 		~TPoro(); //Destructor
 		TPoro& operator=(const TPoro &); //Sobrecarga del operador asignacion
 		bool operator==(const TPoro &); //Sobrecarga del operador igualdad

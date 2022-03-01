@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include "tporo.h"
+#include "tvectorporo.h"
 using namespace std;
 
 int main(){
