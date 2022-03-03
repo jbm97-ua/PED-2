@@ -67,19 +67,32 @@ TVectorPoro& TVectorPoro::operator=(const TVectorPoro &vporo){
 }
 
 //Sobrecarga del operador igualdad
-bool TVectorPoro::operator==(const TVectorPoro &){
-	
-	return true;
+bool TVectorPoro::operator==(const TVectorPoro &vporo){
+	bool equal, different;
+	equal=false; //Para comprobar que TODO es igual
+	different=false; //Para comprobar que todos los elementos del vector son iguales
+
+	if(this->dimension==vporo.dimension){
+		for(long int i=0; i<vporo.dimension; i++){
+			if(datos[i]!=vporo.datos[i]){
+				different=true;
+			}
+		}
+	}
+	if(different==false){ //Se comprueba si todos los elementos de datos son iguales
+		equal=true;
+	}
+	return equal;
 }
 
 //Sobrecarga del operador desigualdad
 bool TVectorPoro::operator!=(const TVectorPoro &vporo){
-	return !(*this==vporo);
+	return !(*this==vporo); //lo contrario que el operador de igualdad
 }
 
 //Sobrecarga del operador corchete (parte IZQUIERDA)
 TPoro& TVectorPoro::operator[](int posicion){
-	if(posicion<0 && posicion<=this->dimension){
+	if(posicion>0 && posicion<=this->dimension){
 		return this->datos[posicion-1];
 	}
 	else{
@@ -88,9 +101,13 @@ TPoro& TVectorPoro::operator[](int posicion){
 }
 
 //Sobrecarga del operador corchete (parte DERECHA)
-TPoro TVectorPoro::operator[](int) const{
-
-	return NULL;
+TPoro TVectorPoro::operator[](int posicion) const{
+	if(posicion>0 && posicion<=this->dimension){
+		return this->datos[posicion-1];
+	}
+	else{
+		return this->error;
+	}
 }
 
 //Devuelve la cantidad de posiciones ocupadas (no vacias) en el vector
@@ -105,11 +122,46 @@ int TVectorPoro::Cantidad() const{
 }
 
 //Rendimensiona el vector
-bool TVectorPoro::Redimensionar(int) const{
-	//vector auxiliar con tamaño que piden
-	//se copia todo lo que se tenia en datos (sin salir de rango)
-	//liberar vector datos (pero reapuntar al auxiliar)
-	//poner el auxiliar a null (sin hacer delete)
+bool TVectorPoro::Redimensionar(int dimensionParam){
+	bool result;
+	//vector auxiliar con tamaño que piden (datos)
+	TPoro *vAux = new TPoro[this->dimension];
+	//TPoro *aux = TVectorPoro(this->datos);???????????
+	for(long unsigned int i=0; i<this->dimension; i++){
+		vAux[i]=this->datos[i];	
+	}
+
+	if(dimensionParam<=0){
+		result=false;
+	}
+	else{ //si dimensionAux>0
+		//liberar vector datos (pero reapuntar al auxiliar)
+		delete [] this->datos;
+		this->datos=NULL;
+
+		if(dimensionParam==this->dimension){
+			result=false;
+		}
+		else if(dimensionParam>this->dimension){
+			this->datos = new TPoro[dimensionParam];
+
+			for(long unsigned int i=0; i<this->dimension; i++){
+				this->datos[i]=vAux[i];
+			}
+			for(long unsigned int j=dimension; j<dimensionParam; j++){
+				this->datos[j] = TPoro();
+			}
+			result = true;
+		}
+		else{ //dimensionAux<this->dimension
+			this->datos = new TPoro[dimensionParam];
+
+			for(long unsigned int i=0; i<dimensionParam; i++){
+				this->datos[i]=vAux[i];
+			}
+			result = true;
+		}
+	}	
 	return true;
 }
 
@@ -129,3 +181,5 @@ ostream& operator<<(ostream &os, TVectorPoro &vporo){
 	
 	return os;
 }
+
+//HAY QUE PONER const EN REDIMENSIONAR??????
