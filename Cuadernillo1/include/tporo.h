@@ -20,7 +20,7 @@ class TPoro{
 	public:
 		TPoro(); //Constructor por defecto
 		TPoro(int, int, double); //Constructor a partir de una posicion y un volumen
-		TPoro(int, int, double, char *); //Constructor desde de una posicion, un volumen y un color
+		TPoro(int, int, double, const char *); //Constructor desde de una posicion, un volumen y un color
 		TPoro(const TPoro &); //Constructor de copia
 		~TPoro(); //Destructor
 		TPoro& operator=(const TPoro &); //Sobrecarga del operador asignacion
@@ -30,7 +30,7 @@ class TPoro{
 		void Posicion(int a, int b){ x=a; y=b; }
 		// Modifica el volumen
 		void Volumen(double vol){ volumen=vol; }
-		void Color(char *col); //Modifica el color
+		void Color(const char *col); //Modifica el color
 		//Devuelve la coordenada x de la posición
 		int PosicionX() const{ return x; }
 		//Devuelve la coordenada y de la posición

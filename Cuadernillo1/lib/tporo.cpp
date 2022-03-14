@@ -19,7 +19,7 @@ TPoro::TPoro(int a, int b, double vol){
 }
 
 //Constructor desde de una posicion, un volumen y un color
-TPoro::TPoro(int a, int b, double vol, char* orig){ 
+TPoro::TPoro(int a, int b, double vol, const char* orig){ 
 	this->x=a;
 	this->y=b;
 	this->volumen=vol;	
@@ -101,7 +101,7 @@ bool TPoro::operator!=(const TPoro &poro){
 }
 
 //Modifica el color
-void TPoro::Color(char *col){
+void TPoro::Color(const char *col){
 	if(col!=NULL){
 		this->color=new char[strlen(col)+1];
 		strcpy(this->color, col);

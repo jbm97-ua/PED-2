@@ -51,16 +51,22 @@ TVectorPoro& TVectorPoro::operator=(const TVectorPoro &vporo){
 		this->~TVectorPoro();
 		//Se modifica el propio objeto
 		this->dimension=vporo.dimension;
-
+		//si el de la derecha es cero igualar a null y a cero
 		if(this->datos!=NULL){
+			delete [] datos;
 			this->datos=new TPoro[vporo.Longitud()];
 			//Se asigna cada elemento del parametro al puntero datos
-			for(long unsigned int i=0; i<vporo.dimension; i++){
+			for(long unsigned int i=0; i<vporo.Longitud(); i++){
 				this->datos[i]=vporo.datos[i];	
 			}
 		}
 		else{
 			this->datos=NULL;
+			this->datos=new TPoro[vporo.Longitud()];
+			//Se asigna cada elemento del parametro al puntero datos
+			for(long unsigned int i=0; i<vporo.Longitud(); i++){
+				this->datos[i]=vporo.datos[i];	
+			}
 		}
 	}
 	return *this;
@@ -68,20 +74,17 @@ TVectorPoro& TVectorPoro::operator=(const TVectorPoro &vporo){
 
 //Sobrecarga del operador igualdad
 bool TVectorPoro::operator==(const TVectorPoro &vporo){
-	bool equal, different;
-	equal=false; //Para comprobar que TODO es igual
-	different=false; //Para comprobar que todos los elementos del vector son iguales
+	bool equal=true; //Para comprobar que TODO es igual
 
-	if(this->dimension==vporo.dimension){
+	if(this->dimension==vporo.Longitud()){
 		for(long int i=0; i<vporo.dimension; i++){
-			if(datos[i]!=vporo.datos[i]){
-				different=true;
+			if(this->datos[i]!=vporo.datos[i]){
+				equal=false;
 			}
 		}
 	}
-	if(different==false){ //Se comprueba si todos los elementos de datos son iguales
-		equal=true;
-	}
+	else{ equal=false; }
+	
 	return equal;
 }
 
@@ -183,3 +186,14 @@ ostream& operator<<(ostream &os, TVectorPoro &vporo){
 }
 
 //HAY QUE PONER const EN REDIMENSIONAR??????
+
+/*
+tad01 -> OK
+tad02 -> OK
+tad03 -> OK
+tad04 -> OK
+tad05 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad06 -> Segmantatio fault (¿operator=?)
+tad07 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+tad08 -> OK {WARNING: ISO C++ forbids converting a string constant to ‘char*’}
+*/
