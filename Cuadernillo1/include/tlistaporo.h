@@ -10,6 +10,8 @@ using namespace std;
 
 
 class TListaNodo{
+	friend class TListaPosicion;
+	friend class TListaPoro;
 	private:
 		TPoro e; //El elemento del nodo
 		TListaNodo *anterior; //El nodo anterior
@@ -25,6 +27,8 @@ class TListaNodo{
 
 
 class TListaPosicion{
+	friend class TListaNodo;
+	friend class TListaPoro;
 	private:
 		TListaNodo *pos; //Para implementar la POSICION a NODO de la LISTA de TPoro
 
@@ -43,6 +47,9 @@ class TListaPosicion{
 
 
 class TListaPoro{
+	friend class TListaNodo;
+	friend class TListaPosicion;
+	//OSTREAM
 	private:
 		TListaNodo *primero; //Primer elemento de la lista
 		TListaNodo *ultimo; //Ultimo elemento de la lista

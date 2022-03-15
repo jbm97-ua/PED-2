@@ -29,7 +29,7 @@ class TVectorPoro{
 		TPoro operator[](int) const; //Sobrecarga del operador corchete (parte DERECHA)
 		int Longitud() const{ return dimension; } //Devuelve la longitud del vector (dimension)
 		int Cantidad() const; //Devuelve la cantidad de posiciones ocupadas (no vacias) en el vector
-		bool Redimensionar(int); //Rendimensiona el vector
+		bool Redimensionar(const int); //Rendimensiona el vector
 };
 
 #endif

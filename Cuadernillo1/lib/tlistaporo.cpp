@@ -7,42 +7,24 @@ TListaNodo::TListaNodo():e(){
 	anterior=NULL;
 	siguiente=NULL;
 }
-
 //Constructor de copia
 TListaNodo::TListaNodo(const TListaNodo &origen):e(origen.e){
 	anterior=NULL;
 	siguiente=NULL;
 }
-
 //Destructor
 TListaNodo::~TListaNodo(){
 	anterior=NULL;
 	siguiente=NULL;
 }
-
 //Sobrecarga del operador asignacion
 TListaNodo& TListaNodo::operator=(const TListaNodo &lnodo){
 	if(this!=&lnodo){
 		this->~TListaNodo();
-		//Se modifica el propio objeto
-		/*this->dimension=vporo.dimension;
-		//si el de la derecha es cero igualar a null y a cero
-		if(this->datos!=NULL){
-			delete [] datos;
-			this->datos=new TPoro[vporo.Longitud()];
-			//Se asigna cada elemento del parametro al puntero datos
-			for(long unsigned int i=0; i<vporo.Longitud(); i++){
-				this->datos[i]=vporo.datos[i];	
-			}
-		}
-		else{
-			this->datos=NULL;
-			this->datos=new TPoro[vporo.Longitud()];
-			//Se asigna cada elemento del parametro al puntero datos
-			for(long unsigned int i=0; i<vporo.Longitud(); i++){
-				this->datos[i]=vporo.datos[i];	
-			}
-		}*/
+
+		anterior=lnodo.anterior;
+		siguiente=lnodo.siguiente;
+		e=lnodo.e;
 	}
 	return *this;
 }
@@ -65,44 +47,50 @@ TListaPosicion::~TListaPosicion(){
 //Sobrecarga del operador asignacion
 TListaPosicion& TListaPosicion::operator=(const TListaPosicion &lpos){
 	if(this!=&lpos){
-		this->~TListaPosicion();
-		/**
-		 *  HACER
-		 * */
+		//La llamada al destructor es inncesaria...
+		//...porque hace pos=NULL y luego pos=lpos.pos
+		pos=lpos.pos;
 	}
 	return *this;
 }
-
 //Sobrecarga del operador igualdad
-bool TListaPosicion::operator==(const TListaPosicion &){
-	/**
-	 *  HACER
-	 * */
-	return false;
+bool TListaPosicion::operator==(const TListaPosicion &lpos){
+	//PONER CONST ALFINAL
+	bool equal=false;
+	if(this->pos==lpos.pos){
+		equal=true;
+	}
+	return equal;
 }
-
 //Devuelve la posicion anterior
 TListaPosicion TListaPosicion::Anterior(){
-	/**
-	 *  HACER
-	 * */
-	return ;
-}
+	TListaPosicion auxAnterior;
 
+	if(this->pos->anterior!=NULL){
+		auxAnterior.pos=this->pos->anterior;
+	}
+
+	return auxAnterior;
+}
 //Devuelve la posicion siguiente
 TListaPosicion TListaPosicion::Siguiente(){
-	/**
-	 *  HACER
-	 * */
-	return ;
-}
+	TListaPosicion auxSiguiente;
 
+	if(this->pos->siguiente!=NULL){
+		auxSiguiente.pos=this->pos->siguiente;
+	}
+
+	return auxSiguiente;
+}
 //Devuelve TRUE si la posicion no apunta a una lista, FALSE en caso contrario
 bool TListaPosicion::EsVacia(){
-	/**
-	 *  HACER
-	 * */
-	return false;
+	bool empty=false;
+
+	if(this->pos==NULL){
+		empty=true;
+	}
+
+	return empty;
 }
 
 
