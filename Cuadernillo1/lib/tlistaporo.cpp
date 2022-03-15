@@ -98,19 +98,27 @@ bool TListaPosicion::EsVacia(){
 
 //Constructor por defecto
 TListaPoro::TListaPoro(){
-
+ 	/**
+	 * HACER
+	 * */
 }
 //Constructor de copia
 TListaPoro::TListaPoro(const TListaPoro &lporo){
-
+	/**
+	 * HACER
+	 * */
 }
 //Destructor
 TListaPoro::TListaPoro(){
-
+	/**
+	 * HACER
+	 * */
 }
 //Sobrecarga del operador asignacion
 TListaPoro& TListaPoro::operator=(const TListaPoro &lporo){
-
+	/**
+	 * HACER
+	 * */
 }
 //Sobrecarga del operador igualdad
 bool TListaPoro::operator==(const TListaPoro &lporo){
@@ -133,10 +141,13 @@ TListaPoro TListaPoro::operator-(const TListaPoro &lporo){
 }
 //Devuelve true si la lista esta vacia, false en caso contrario
 bool TListaPoro::EsVacia(){
-	/**
-	 * HACER
-	 * */
-	return false;
+	bool empty=false;
+
+	if(this->primero==NULL){
+		empty=true;
+	}
+
+	return empty;
 }
 //Inserta el elemento en la lista
 bool TListaPoro::Insertar(const TPoro &lporo){
@@ -144,6 +155,30 @@ bool TListaPoro::Insertar(const TPoro &lporo){
 	 * HACER
 	 * */
 	return false;
+}
+//Inserta el elemento al principio de la lista
+void TListaPoro::InsertarEnCabeza(const TPoro &poro){
+	TListaNodo *aux = new TListaNodo();
+	//El poro de 'aux' es el que nos pasan como parametro
+	aux->e=poro;
+	//El siguiente poro del nuevo insertado será el que anterioremente era el primero
+	aux->siguiente=primero;
+	//El poro que anteriormente era el primero, tendra como anterior al que se acaba de insertar
+	primero->anterior=aux;
+	//Se actualiza el poro insertado como el primero
+	primero=aux; //Se actualiza el primero
+}
+//Inserta el elemento en medio de la lista
+void TListaPoro::InsertarEnMedio(const TPoro &poro){
+	/**
+	 * HACER
+	 * */
+}
+//Inserta el elemento en la cola de la lista
+void TListaPoro::InsertarEnCola(const TPoro &poro){
+	/**
+	 * HACER
+	 * */
 }
 //Busca y borra el elemento
 bool TListaPoro::Borrar(const TPoro &lporo){
@@ -154,7 +189,9 @@ bool TListaPoro::Borrar(const TPoro &lporo){
 }
 //Borra el elemento que ocupa la posición indicada
 bool TListaPoro::Borrar(const TListaPosicion &lporo){
-
+	/**
+	 * HACER
+	 * */
 	return false;
 }
 //Obtiene el elemento que ocupa la posición indicada
@@ -171,26 +208,44 @@ bool TListaPoro::Buscar(const TPoro &lporo){
 	return false;
 }
 //Devuelve la longitud de la lista
-int TListaPoro::Longitud() const{
-	/**
-	 * HACER
-	 * */
+int TListaPoro::Longitud(){
+	int length=0;
+	
+	for(TListaPosicion i=this->Primera(); !i.EsVacia(); i=i.Siguiente()){
+		length++;
+	}
+
+	return length;
 }
 //Devuelve la primera posición en la lista
 TListaPosicion TListaPoro::Primera(){
-	/**
-	 * HACER
-	 * */
+	TListaPosicion auxPrimera;
+
+	if(!this->EsVacia()){
+		auxPrimera.pos=this->primero;
+	}
+
+	return auxPrimera;
 }
 //Devuelve la última posición en la lista
 TListaPosicion TListaPoro::Ultima(){
-	/**
-	 * HACER
-	 * */
+	TListaPosicion auxUltima;
+
+	if(!this->EsVacia()){
+		auxUltima.pos=this->ultimo;
+	}
+	
+	return auxUltima;
 }
 //Extraer un rango de nodos de la lista
 TListaPoro TListaPoro::ExtraerRango(int n1, int n2){
 	/**
 	 * HACER
 	 * */
+}
+ostream& operator<<(ostream &os, TListaPoro &lporo){
+	/**
+	 * HACER
+	 * */
+	return os;
 }
