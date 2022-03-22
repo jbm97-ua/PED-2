@@ -5,7 +5,7 @@ OPTIONS= -g
 DEBUG= #-D DEBUG
 LIBDIR=lib
 INCLUDEDIR=include
-_OBJ= tporo.o tvectorporo.o #tlistaporo.o 
+_OBJ= tporo.o tvectorporo.o tlistaporo.o 
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
 main:    src/main.cpp $(OBJ)
@@ -19,3 +19,14 @@ doc:
 
 clean:
 	rm -f $(OBJ)
+	
+	#l 	-> listar
+	#b 11   -> breakpoint line 11
+	#r      -> run
+	#n      -> next (ejecuta el metodo)
+	#s      -> step (se mete en el metodo linea a linea)
+	#p [var]-> muestra valor de pantalla
+	#d [var]->muestra el valor en todo momento 
+	#q	->salir
+	
+	#valgrind 
