@@ -83,13 +83,11 @@ TListaPosicion TListaPosicion::Siguiente(){
 	return auxSiguiente;
 }
 //Devuelve TRUE si la posicion no apunta a una lista, FALSE en caso contrario
-bool TListaPosicion::EsVacia(){
+bool TListaPosicion::EsVacia() const{
 	bool empty=false;
-
 	if(this->pos==NULL){
 		empty=true;
 	}
-
 	return empty;
 }
 
@@ -109,43 +107,88 @@ TListaPoro::TListaPoro(const TListaPoro &lporo){
 	this->primero=NULL;
 
 	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
+		//¿¿¿¿¿RESERVAR MEMORIA??????????
+		//TPoro poro = new TPoro(i.pos->e);
 		this->Insertar(i.pos->e);
+		//this->Insertar(i.pos->e);
 	}
 }
 //Destructor
 TListaPoro::~TListaPoro(){
-	/**
-	 * HACER
-	 * */
+	TListaNodo *auxDestructor;
+	//Se va eliminando cada elemento del vector eliminando el primero y actualizando...
+	//...el siguiente como el nuevo primero
+	while(this->primero!=NULL){
+		auxDestructor = this->primero->siguiente;
+      delete this->primero;
+      this->primero = auxDestructor;
+	}
 }
 //Sobrecarga del operador asignacion
 TListaPoro& TListaPoro::operator=(const TListaPoro &lporo){
 	if(this!=&lporo){
 		this->~TListaPoro();
-		/**
-		 * HACER BUCLE FOR ASIGNANDO
-		 * */
+		//Se recorre la lista 'lporo' y se inserta cada poro de esa lista dentro...
+		//...de la la lista 'this'
+		for(TListaPosicion i = lporo.Primera(); !i.EsVacia(); i = i.Siguiente()){ 
+			//¿¿¿¿¿RESERVAR MEMORIA??????
+         this->Insertar(i.pos->e);
+      }   
 	}
 	return *this;
 }
 //Sobrecarga del operador igualdad
 bool TListaPoro::operator==(const TListaPoro &lporo){
-	/**
-	 * HACER3
-	 * */
-	return false;
+	bool equal=true;
+	/** Se crean dos LPosicion que son inicializadas con la primera posicion de mi lista...
+	 ** ...y la primera posicion de la lista que se nos pasa como parametro.
+	 ** Para poder ir comparando posicion a posicion si ambas listas son iguales*/
+	TListaPosicion myList = this->Primera();
+	TListaPosicion otherList = lporo.Primera(); 
+
+	//Si las longitudes de ambas listas son distinas, las listas son diferentes
+	if(lporo.Longitud()==this->Longitud()){
+		do{
+			//Si ambas listas no estan vacias...
+			if(!myList.EsVacia() && !otherList.EsVacia()){
+				//Se comprueba si el elemento en la misma posicion de cada vector es IGUAL
+				if(myList.pos->e != otherList.pos->e){
+					equal=false;
+				}
+				myList=myList.Siguiente(); //myList++
+				otherList=otherList.Siguiente(); //otherList++
+			}
+		}while(!myList.EsVacia()); //Se repetira mientras MI lista no sea vacia
+	}
+	else{ 
+		equal=false; //Longitudes diferentes
+	}
+	
+	return equal;
 }
-//Sobrecarga del operador suma
+//Sobrecarga del operador suma (devuelve una nueva lista resultado de concatenar dos)
 TListaPoro TListaPoro::operator+(const TListaPoro &lporo){
-	/**
-	 * HACER
-	 * */
+	//Creo la lista que sera devuelta identica a la lista 'this' (constructor de copia)
+	TListaPoro *chaining = new TListaPoro(*this);
+
+	//Recorro la lista pasada como parametro e inserto en la lista auxiliar...
+	//...todos y cada uno de los nodos (insertar se encarga de ordenarlos)
+	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
+		chaining->Insertar(i.pos->e);
+	}
+	return (*chaining);
 }
-//Sobrecarga del operador resta
+//Sobrecarga del operador resta (devuelve una nueva lista resultado de la difierencia de dos listas)
 TListaPoro TListaPoro::operator-(const TListaPoro &lporo){
-	/**
-	 * HACER
-	 * */
+	//Creo la lista que sera devuelta identica a la lista 'this' (constructor de copia)
+	TListaPoro *filtering = new TListaPoro(*this);
+
+	//Recorro la lista pasada como parametro y elimino de la lista auxiliar...
+	//...todos y cada uno de los nodos (borrar se encarga de borrarlos)
+	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
+		filtering->Borrar(i.pos->e);
+	}
+	return (*filtering);
 }
 //Devuelve true si la lista esta vacia, false en caso contrario
 bool TListaPoro::EsVacia() const{
@@ -220,20 +263,41 @@ void TListaPoro::InsertarEnCola(const TPoro &poro){
 	//Se actualiza el poro insertado como el ultimo
 	ultimo=auxCola; //Se actualiza el ultimo
 }
-//Busca y borra el elemento
-//https://www.youtube.com/watch?v=mQOtpTlw_7Q&ab_channel=Programaci%C3%B3nDesdeCero
-
+//Busca y borra el elemento --> https://www.youtube.com/watch?v=mQOtpTlw_7Q&ab_channel=Programaci%C3%B3nDesdeCero
 bool TListaPoro::Borrar(const TPoro &lporo){
-	/**
-	 * HACER
-	 * */
+	TListaNodo *nEliminar;
+	TListaNodo *nAuxiliar = this->primero; //Nodo auxliar ubicado al principio de la lista
+	
+	//Mientras que el nodo auxiliar apunte a algun nodo de la lista...
+	while(nAuxiliar!=NULL){
+		//Se comprueba si el primer elemento de la lista es igual al elemento que se quiere eliminar
+		if(this->primero->e == lporo){
+			nEliminar=this->primero; //El punter 'eliminar' apunta el primer nodo de la lista
+			this->primero=this->primero->siguiente; //Se actualiza el nuevo 'primero'
+			//nAuxiliar=nAuxiliar->siguiente; //Para poder eliminar mas poros iguales al que se desea eliminar
+			delete nEliminar; //Se elimina el PORO de la memoria definitivamente
+			return true;
+		}
+		else{
+			//Eliminar el nodo intermedio
+			if(nAuxiliar->siguiente!=NULL && nAuxiliar->siguiente->e==lporo){
+				nEliminar=nAuxiliar->siguiente;
+				nAuxiliar->siguiente=nAuxiliar->siguiente->siguiente; //Saltamos el nodo que va a ser eliminado
+				delete nEliminar; //Se elimina el PORO  de la memoria definitivamente
+				return true;
+			}
+			else{ //Ni el primero ni el siguiente son el que queremos eliminar
+				nAuxiliar=nAuxiliar->siguiente;
+			}
+		}
+	}
 	return false;
 }
 //Borra el elemento que ocupa la posición indicada
 bool TListaPoro::Borrar(const TListaPosicion &lporo){
-	/**
-	 * HACER
-	 * */
+	if(!lporo.EsVacia()){
+		return Borrar(lporo.pos->e); //Devuelve true (si se elimina) y false (si no se elimina)
+	}
 	return false;
 }
 //Obtiene el elemento que ocupa la posición indicada
@@ -251,24 +315,19 @@ TPoro TListaPoro::Obtener(const TListaPosicion &lporo){
 //Devuelve true si el elemento está en la lista, false en caso contrario
 bool TListaPoro::Buscar(const TPoro &lporo){
 	bool found=false;
-
-	for(TListaPosicion i=Primera(); !
-	i.EsVacia(); i=i.Siguiente()){
+	for(TListaPosicion i=Primera(); !i.EsVacia(); i=i.Siguiente()){
 		if(i.pos->e==lporo){
 			found=true;
 		}
 	}
-
 	return found;
 }
 //Devuelve la longitud de la lista
-int TListaPoro::Longitud(){
+int TListaPoro::Longitud() const{
 	int length=0;
-	
 	for(TListaPosicion i=this->Primera(); !i.EsVacia(); i=i.Siguiente()){
 		length++;
 	}
-
 	return length;
 }
 //Devuelve la primera posición en la lista
@@ -293,13 +352,46 @@ TListaPosicion TListaPoro::Ultima(){
 }
 //Extraer un rango de nodos de la lista
 TListaPoro TListaPoro::ExtraerRango(int n1, int n2){
-	/**
-	 * HACER
-	 * */
+	TListaPoro *miLista = new TListaPoro(*this);
+	TListaPoro listaRango;
+	int counter=1;
+
+	if(n1>n2){
+		return listaRango;
+	}
+	if(n1<=0){
+		n1=1;
+	}
+	if(n2>this->Longitud()){
+		n2=this->Longitud();
+	}
+
+	for(TListaPosicion i=miLista->Primera(); !i.EsVacia(); i=i.Siguiente()){
+		if(n1<=counter && counter<=n2){
+			listaRango.Insertar(i.pos->e);
+			this->Borrar(i.pos->e);
+		}
+		counter++;
+	}
+	miLista->~TListaPoro();
+
+	return listaRango;
 }
+//Operador de salida
 ostream& operator<<(ostream &os, TListaPoro &lporo){
-	/**
-	 * HACER
-	 * */
+	os << "(";
+	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
+		//os << i;
+		if(i==lporo.Ultima()){
+			os << "";
+		}
+		else{
+			os << " ";
+		}
+	}
+	os << ")";
 	return os;
 }
+
+//	((1, 1) 1.00 - (2, 2) 2.00 - (3, 3) 3.00 -)
+//	[1 (1, 2) 3.00 rojo 2 (1, 2) 3.00 rojo 3 (1, 2) 3.00 rojo 4 (1, 2) 3.00 rojo 5 (1, 2) 3.00 rojo]

@@ -41,7 +41,7 @@ class TListaPosicion{
 		bool operator==(const TListaPosicion &); //Sobrecarga del operador igualdad
 		TListaPosicion Anterior() const; //Devuelve la posicion anterior
 		TListaPosicion Siguiente(); //Devuelve la posicion siguiente
-		bool EsVacia(); //Devuelve TRUE si la posicion no apunta a una lista, FALSE en caso contrario
+		bool EsVacia() const; //Devuelve TRUE si la posicion no apunta a una lista, FALSE en caso contrario
 };
 
 
@@ -73,7 +73,7 @@ class TListaPoro{
 		bool Borrar(const TListaPosicion &); //Borra el elemento que ocupa la posición indicada
 		TPoro Obtener(const TListaPosicion &); //Obtiene el elemento que ocupa la posición indicada
 		bool Buscar(const TPoro &); //Devuelve true si el elemento está en la lista, false en caso contrario
-		int Longitud(); //Devuelve la longitud de la lista
+		int Longitud() const; //Devuelve la longitud de la lista
 		TListaPosicion Primera() const; //Devuelve la primera posición en la lista
 		TListaPosicion Ultima(); //Devuelve la última posición en la lista
 		TListaPoro ExtraerRango(int n1, int n2); //Extraer un rango de nodos de la lista
