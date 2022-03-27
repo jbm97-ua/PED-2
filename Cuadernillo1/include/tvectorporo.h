@@ -10,7 +10,7 @@
 using namespace std;
 
 class TVectorPoro{
-	friend ostream& operator<<(ostream &, TVectorPoro &); //Sobrecarga del operador SALIDA
+	friend ostream& operator<<(ostream &, const TVectorPoro &); //Sobrecarga del operador SALIDA
 
 	private:
 		int dimension; //Dimension del vector

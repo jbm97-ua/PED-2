@@ -157,7 +157,7 @@ bool TVectorPoro::Redimensionar(const int dimensionParam){
 	}	
 	return true;
 }
-ostream& operator<<(ostream &os, TVectorPoro &vporo){
+ostream& operator<<(ostream &os, const TVectorPoro &vporo){
 	os << "[";
 	if(vporo.Longitud()>0){
 		for(long unsigned int i=0; i<vporo.Longitud(); i++){

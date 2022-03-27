@@ -49,7 +49,7 @@ TListaPosicion& TListaPosicion::operator=(const TListaPosicion &lpos){
 	if(this!=&lpos){
 		//La llamada al destructor es inncesaria...
 		//...porque hace pos=NULL y luego pos=lpos.pos
-		pos=lpos.pos;
+		this->pos=lpos.pos;
 	}
 	return *this;
 }
@@ -210,7 +210,7 @@ bool TListaPoro::Insertar(const TPoro &lporo){
 	}
 	lpos=this->Primera();
 
-	while(!EsVacia()){
+	while(!lpos.EsVacia()){
 		if(lpos.pos->e == lporo){ //Si el poro a insertar ya existe, no se inserta
 			return false;
 		}
@@ -224,6 +224,7 @@ bool TListaPoro::Insertar(const TPoro &lporo){
 			return true;
 		}
 		lpos=lpos.Siguiente();
+
 	}
 	InsertarEnCola(lporo);
 	return true;
@@ -233,12 +234,20 @@ void TListaPoro::InsertarEnCabeza(const TPoro &poro){
 	TListaNodo *auxCabeza = new TListaNodo();
 	//El poro de 'aux' es el que nos pasan como parametro
 	auxCabeza->e=poro;
-	//El siguiente poro del nuevo insertado será el que anterioremente era el primero
-	auxCabeza->siguiente=primero;
-	//El poro que anteriormente era el primero, tendra como anterior al que se acaba de insertar
-	primero->anterior=auxCabeza;
-	//Se actualiza el poro insertado como el primero
-	primero=auxCabeza; //Se actualiza el primero
+
+	//Si la lista NO es vacia...
+	if(primero!=NULL){
+		//El siguiente poro del nuevo insertado será el que anterioremente era el primero
+		auxCabeza->siguiente=primero;
+		//El poro que anteriormente era el primero, tendra como anterior al que se acaba de insertar
+		primero->anterior=auxCabeza;
+		//Se actualiza el poro insertado como el primero
+		primero=auxCabeza; //Se actualiza el primero
+	}
+	else{
+		this->primero=auxCabeza;
+		this->ultimo=auxCabeza;
+	}
 }
 //Inserta el elemento en medio de la lista
 void TListaPoro::InsertarEnMedio(const TPoro &poro, const TListaPosicion &lpos){
@@ -248,7 +257,7 @@ void TListaPoro::InsertarEnMedio(const TPoro &poro, const TListaPosicion &lpos){
 	auxMedio->anterior = lpos.Anterior().pos;
 	auxMedio->siguiente = lpos.pos;
 
-	(auxMedio->siguiente)->anterior=auxMedio;
+	(auxMedio->siguiente)->anterior=auxMedio; // 1 -> <- X -> <- 3
 	(auxMedio->anterior)->siguiente=auxMedio;
 }
 //Inserta el elemento en la cola de la lista
@@ -304,7 +313,7 @@ bool TListaPoro::Borrar(const TListaPosicion &lporo){
 TPoro TListaPoro::Obtener(const TListaPosicion &lporo){
 	TPoro auxPoro;
 
-	for(TListaPosicion i=Primera(); !i.EsVacia(); i.Siguiente()){
+	for(TListaPosicion i=Primera(); !i.EsVacia(); i=i.Siguiente()){
 		if(i.pos==lporo.pos){
 			auxPoro=i.pos->e;
 		}
@@ -334,9 +343,11 @@ int TListaPoro::Longitud() const{
 TListaPosicion TListaPoro::Primera() const{
 	TListaPosicion auxPrimera;
 
-	if(!this->EsVacia()){
-		auxPrimera.pos=this->primero;
+	if(this->EsVacia()){
+		return auxPrimera;
+		
 	}
+	auxPrimera.pos=primero;
 
 	return auxPrimera;
 }
@@ -381,7 +392,7 @@ TListaPoro TListaPoro::ExtraerRango(int n1, int n2){
 ostream& operator<<(ostream &os, TListaPoro &lporo){
 	os << "(";
 	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
-		//os << i;
+		os << lporo.Obtener(i);
 		if(i==lporo.Ultima()){
 			os << "";
 		}

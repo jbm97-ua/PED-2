@@ -9,7 +9,6 @@ TPoro::TPoro(){
 	this->volumen=0;
 	this->color=NULL;
 }
-
 //Constructor a partir de una posicion y un volumen
 TPoro::TPoro(int a, int b, double vol){
 	this->x=a;
@@ -17,7 +16,6 @@ TPoro::TPoro(int a, int b, double vol){
 	this->volumen=vol;
 	this->color=NULL;
 }
-
 //Constructor desde de una posicion, un volumen y un color
 TPoro::TPoro(int a, int b, double vol, const char* orig){ 
 	this->x=a;
@@ -32,7 +30,6 @@ TPoro::TPoro(int a, int b, double vol, const char* orig){
 		this->color=NULL;
 	}
 }
-
 //CONSTRUCTOR DE COPIA
 TPoro::TPoro(const TPoro &poro){ // (const -> para que no se modifique orig)
 	this->x=poro.x;
@@ -46,7 +43,6 @@ TPoro::TPoro(const TPoro &poro){ // (const -> para que no se modifique orig)
 		this->color=NULL;
 	}
 }
-
 //DESTRUCTOR
 TPoro::~TPoro(){
 	this->x=0;
@@ -56,7 +52,6 @@ TPoro::~TPoro(){
 		this->color=NULL;
 	}
 }
-
 //Sobrecarga del operador asignacion
 TPoro& TPoro::operator=(const TPoro &poro){ //por referencia para conseguir rapidez
 	if(this!=&poro){
@@ -77,20 +72,25 @@ TPoro& TPoro::operator=(const TPoro &poro){ //por referencia para conseguir rapi
 
 	return *this; //Se devuelve el objeto que ha sido modificado
 }
-
 //Sobrecarga del operador igualdad
 bool TPoro::operator==(const TPoro &poro){ 
 	bool equal=false;
 
-	if(this->x==poro.x && this->y==poro.y && this->volumen==poro.volumen && this->color==poro.color){
-		equal=true;
+	if(x==poro.x && y==poro.y && volumen==poro.volumen){
+		//Si el color de ambos es nulo...
+		if(this->color==NULL && poro.color==NULL){
+			equal=true;
+		}
+		if(this->color!=NULL && poro.color!=NULL){ //Si no es nulo...
+			if(strcmp(this->color, poro.color)==0){ //Si son iguales
+				equal=true;
+			}
+		}
 	}
-
 	return equal;
 }
-
 //Sobrecarga del operador desigualdad
-bool TPoro::operator!=(const TPoro &poro){ 
+bool TPoro::operator!=(const TPoro &poro){
 	bool diferent=false;
 
 	if(this->x!=poro.x || this->y!=poro.y || this->volumen!=poro.volumen || this->color!=poro.color){
@@ -99,7 +99,6 @@ bool TPoro::operator!=(const TPoro &poro){
 
 	return diferent;
 }
-
 //Modifica el color
 void TPoro::Color(const char *col){
 	if(col!=NULL){
@@ -110,7 +109,6 @@ void TPoro::Color(const char *col){
 		this->color=NULL;
 	}
 }
-
 //Devuelve cierto si el poro está vacío
 bool TPoro::EsVacio() const{
 	bool empty=false;
@@ -121,8 +119,7 @@ bool TPoro::EsVacio() const{
 
 	return empty;
 }
-
-ostream& operator<<(ostream &os, TPoro &poro){
+ostream& operator<<(ostream &os, const TPoro &poro){
 	if(!poro.EsVacio()){
 		os.setf(ios::fixed);
 		os.precision( 2 );

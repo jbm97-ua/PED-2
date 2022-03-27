@@ -9,7 +9,7 @@
 using namespace std;
 
 class TPoro{
-	friend ostream& operator<<(ostream &, TPoro &); //Sobrecarga del operador SALIDA
+	friend ostream& operator<<(ostream &, const TPoro &); //Sobrecarga del operador SALIDA
 
 	private:
 		int x; //Coordenada x de la posicion
