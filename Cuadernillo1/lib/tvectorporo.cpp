@@ -142,7 +142,7 @@ bool TVectorPoro::Redimensionar(const int dimensionParam){
 					vAux[j]=*vEmpty;
 				}
 				//Se asigna el nuevo vector resulatando al nuestro (this)
-				(*this).~TVectorPoro();   
+				this->~TVectorPoro();   
 				this->dimension=dimensionParam;
 				this->datos=vAux;
 				result=true;  
@@ -152,7 +152,7 @@ bool TVectorPoro::Redimensionar(const int dimensionParam){
 					vAux[i]=this->datos[i];
 				}
 				//Se asigna el nuevo vector resulatando al nuestro (this)
-				(*this).~TVectorPoro();  
+				this->~TVectorPoro();  
 				this->dimension = dimensionParam; 
 				this->datos = vAux;		
 				result=true;

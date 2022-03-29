@@ -566,23 +566,25 @@ int tlporotestEsVacia() {
     else cerr << "ERROR TEST: tlporotestEsVacia not works with non-empty list. " << endl;
     return punt;
 }
-/*
+
 int tlporoTestBuscar() { // 3 puntos
+    
     int punt = 0;
     TListaPoro lista;
-    TListaPosicion item1, item2;
+    TPoro item1, item2;
+
     lista.Insertar(TPoro(20, 4, 19.90, (char*)"Poro 1"));
-    item1 = lista.Primera();
+    item1 = TPoro(20, 4, 19.90, (char*)"Poro 1");
     lista.Insertar(TPoro(9, 10, 20.18, (char*)"Poro 2"));
-    item2 = lista.Ultima();
-    if(!lista.Buscar(TListaPosicion()) punt++;
+    item2 = TPoro(9, 10, 20.18, (char*)"Poro 2");
+    if(!lista.Buscar( TPoro() )) punt++;
     else cerr << "ERROR TEST: tlporoTestBuscar not works. " << endl;
     if(lista.Buscar(item2)) punt++;
     else cerr << "ERROR TEST: tlporoTestBuscar not works. " << endl;
     if(lista.Buscar(item1)) punt++;
     else cerr << "ERROR TEST: tlporoTestBuscar not works. " << endl;
     return punt;
-}*/
+}
 
 int tlporoTestOperatorEquals() { // 3 puntos
     int punt = 0;
@@ -880,11 +882,11 @@ int tlporoTestDobleDestroy() {   // 2 puntos
     punt++;
     return punt;
 }
-/*
+
 int tlporoTestDestroyInternalPointer() {
     int punt = 0;
 
-    TPoro uno = new TPoro(14, 2, 1946, (char)"ENIAC");
+    TPoro *uno = new TPoro(14, 2, 1946, (char*)"ENIAC");
     TPoro unoNonPointer = TPoro(14, 2, 1946, (char*)"ENIAC");
     TListaPoro lista;
     TListaPoro listaCopy;
@@ -896,7 +898,7 @@ int tlporoTestDestroyInternalPointer() {
     if(lista == listaCopy) punt++;
     else cerr << "ERROR TEST: tlcalTestDestroyInternalPointer estamos jodíos, cabrón." << endl;
     return punt;
-}*/
+}
 
 int tlporoTestOpAsigCapulladas() { // 2 puntos
     int punt = 0;
@@ -930,7 +932,7 @@ int tlporoTestBooleanMethods() {
     const int expected = 10;
     punt += tlporotestOpAsig();         //  2 puntos
     punt += tlporotestEsVacia();        //  2 puntos
-    //punt += tlporoTestBuscar();         //  3 puntos
+    punt += tlporoTestBuscar();         //  3 puntos
     punt += tlporoTestOperatorEquals(); //  3 puntos
     cout << "tlporoTestBooleanMethods" << punt << " / " << expected << endl;
     return punt;
@@ -976,7 +978,7 @@ int tlporoTestCapulladas() { // 5 puntos
     int expected = 5;
 
     punt += tlporoTestDobleDestroy();            // 2 puntos
-    //punt += tlporoTestDestroyInternalPointer();  // 1 punto
+    punt += tlporoTestDestroyInternalPointer();  // 1 punto
     punt += tlporoTestOpAsigCapulladas();        // 2 puntos
 
     cout << "tlporoTestCapulladas: " << punt << " / " << expected << endl;

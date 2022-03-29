@@ -105,6 +105,7 @@ TListaPoro::TListaPoro(const TListaPoro &lporo){
 	//...por tanto al hacer el for con insertar, asignara el primer elemento...
 	//...a 'primero'
 	this->primero=NULL;
+	this->ultimo=NULL;
 
 	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
 		//TPoro poro = new TPoro(i.pos->e);
@@ -286,6 +287,7 @@ bool TListaPoro::Borrar(const TPoro &lporo){
 			nEliminar=this->primero; //El punter 'eliminar' apunta el primer nodo de la lista
 			this->primero=this->primero->siguiente; //Se actualiza el nuevo 'primero'
 			//nAuxiliar=nAuxiliar->siguiente; //Para poder eliminar mas poros iguales al que se desea eliminar
+			
 			delete nEliminar; //Se elimina el PORO de la memoria definitivamente
 			return true;
 		}
@@ -293,8 +295,17 @@ bool TListaPoro::Borrar(const TPoro &lporo){
 			//Eliminar el nodo intermedio
 			if(nAuxiliar->siguiente!=NULL && nAuxiliar->siguiente->e==lporo){
 				nEliminar=nAuxiliar->siguiente;
-				nAuxiliar->siguiente=nAuxiliar->siguiente->siguiente; //Saltamos el nodo que va a ser eliminado
-				delete nEliminar; //Se elimina el PORO  de la memoria definitivamente
+
+				if(nAuxiliar->siguiente->siguiente==NULL){
+					nAuxiliar->siguiente=NULL;
+					ultimo=nAuxiliar;
+					delete nEliminar;
+				}
+				else{
+					nAuxiliar->siguiente=nAuxiliar->siguiente->siguiente;
+					(nAuxiliar->siguiente)->anterior=nAuxiliar;
+					delete nEliminar;
+				}
 				return true;
 			}
 			else{ //Ni el primero ni el siguiente son el que queremos eliminar
