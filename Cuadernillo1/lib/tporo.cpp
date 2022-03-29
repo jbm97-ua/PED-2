@@ -1,4 +1,4 @@
-//Jose Burgos Miras
+//Jose Burgos Miras  48758447B
 //tporo.cpp
 #include "tporo.h"
 
@@ -47,6 +47,7 @@ TPoro::TPoro(const TPoro &poro){ // (const -> para que no se modifique orig)
 TPoro::~TPoro(){
 	this->x=0;
 	this->y=0;
+	this->volumen=0;
 	if(this->color!=NULL){
 		delete this->color;
 		this->color=NULL;
@@ -119,6 +120,7 @@ bool TPoro::EsVacio() const{
 
 	return empty;
 }
+//Ostream
 ostream& operator<<(ostream &os, const TPoro &poro){
 	if(!poro.EsVacio()){
 		os.setf(ios::fixed);

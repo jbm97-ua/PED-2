@@ -4,26 +4,26 @@
 
 //Constructor por defecto
 TListaNodo::TListaNodo():e(){
-	anterior=NULL;
 	siguiente=NULL;
+	anterior=NULL;
 }
 //Constructor de copia
 TListaNodo::TListaNodo(const TListaNodo &origen):e(origen.e){
-	anterior=NULL;
 	siguiente=NULL;
+	anterior=NULL;
 }
 //Destructor
 TListaNodo::~TListaNodo(){
-	anterior=NULL;
 	siguiente=NULL;
+	anterior=NULL;
 }
 //Sobrecarga del operador asignacion
 TListaNodo& TListaNodo::operator=(const TListaNodo &lnodo){
 	if(this!=&lnodo){
 		this->~TListaNodo();
 
-		anterior=lnodo.anterior;
 		siguiente=lnodo.siguiente;
+		anterior=lnodo.anterior;
 		e=lnodo.e;
 	}
 	return *this;
@@ -57,7 +57,7 @@ TListaPosicion& TListaPosicion::operator=(const TListaPosicion &lpos){
 bool TListaPosicion::operator==(const TListaPosicion &lpos){
 	//PONER CONST ALFINAL
 	bool equal=false;
-	if(this->pos==lpos.pos){
+	if(lpos.pos==this->pos){
 		equal=true;
 	}
 	return equal;
@@ -96,8 +96,8 @@ bool TListaPosicion::EsVacia() const{
 
 //Constructor por defecto
 TListaPoro::TListaPoro(){
- 	primero=NULL;
 	ultimo=NULL;
+	primero=NULL;
 }
 //Constructor de copia
 TListaPoro::TListaPoro(const TListaPoro &lporo){
@@ -107,7 +107,6 @@ TListaPoro::TListaPoro(const TListaPoro &lporo){
 	this->primero=NULL;
 
 	for(TListaPosicion i=lporo.Primera(); !i.EsVacia(); i=i.Siguiente()){
-		//¿¿¿¿¿RESERVAR MEMORIA??????????
 		//TPoro poro = new TPoro(i.pos->e);
 		this->Insertar(i.pos->e);
 		//this->Insertar(i.pos->e);
@@ -152,7 +151,10 @@ bool TListaPoro::operator==(const TListaPoro &lporo){
 			//Si ambas listas no estan vacias...
 			if(!myList.EsVacia() && !otherList.EsVacia()){
 				//Se comprueba si el elemento en la misma posicion de cada vector es IGUAL
-				if(myList.pos->e != otherList.pos->e){
+				if(myList.pos->e == otherList.pos->e){
+					//
+				}
+				else{
 					equal=false;
 				}
 				myList=myList.Siguiente(); //myList++
@@ -214,7 +216,7 @@ bool TListaPoro::Insertar(const TPoro &lporo){
 		if(lpos.pos->e == lporo){ //Si el poro a insertar ya existe, no se inserta
 			return false;
 		}
-		if(lpos.pos->e.Volumen() >= lporo.Volumen()){
+		if(lpos.pos->e.Volumen() > lporo.Volumen()){
 			if(Primera()==lpos){
 				InsertarEnCabeza(lporo);
 			}

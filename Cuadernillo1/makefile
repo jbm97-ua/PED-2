@@ -8,7 +8,7 @@ INCLUDEDIR=include
 _OBJ= tporo.o tvectorporo.o tlistaporo.o 
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
-main:    src/main.cpp $(OBJ)
+all:    src/main.cpp $(OBJ)
 	$(CC) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) src/main.cpp $(OBJ) -o main
 
 $(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h

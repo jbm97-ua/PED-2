@@ -71,9 +71,12 @@ TVectorPoro& TVectorPoro::operator=(const TVectorPoro &vporo){
 bool TVectorPoro::operator==(const TVectorPoro &vporo){
 	bool equal=true; //Para comprobar que TODO es igual
 
-	if(this->dimension==vporo.Longitud()){
+	if(this->dimension==vporo.dimension){
 		for(long int i=0; i<vporo.dimension; i++){
-			if(this->datos[i]!=vporo.datos[i]){
+			if(this->datos[i]==vporo.datos[i]){
+				equal=true;
+			}
+			else{
 				equal=false;
 			}
 		}
@@ -91,18 +94,14 @@ TPoro& TVectorPoro::operator[](int posicion){
 	if(posicion>0 && posicion<=this->dimension){
 		return this->datos[posicion-1];
 	}
-	else{
-		return this->error;
-	}
+	else{ return this->error; }
 }
 //Sobrecarga del operador corchete (parte DERECHA)
 TPoro TVectorPoro::operator[](int posicion) const{
 	if(posicion>0 && posicion<=this->dimension){
 		return this->datos[posicion-1];
 	}
-	else{
-		return this->error;
-	}
+	else{ return this->error; }
 }
 //Devuelve la cantidad de posiciones ocupadas (no vacias) en el vector
 int TVectorPoro::Cantidad() const{
@@ -117,45 +116,50 @@ int TVectorPoro::Cantidad() const{
 //Rendimensiona el vector
 bool TVectorPoro::Redimensionar(const int dimensionParam){
 	bool result;
-	//vector auxiliar con tamaño que piden (datos)
-	TPoro *vAux = new TPoro[this->dimension];
-	//TPoro *aux = TVectorPoro(this->datos);???????????
-	for(long unsigned int i=0; i<this->dimension; i++){
-		vAux[i]=this->datos[i];	
-	}
-
-	if(dimensionParam<=0){
+	//Si la dimension es menor que cero o igual a cero-> FALSO
+	if(dimensionParam <= 0){
 		result=false;
 	}
-	else{ //si dimensionAux>0
-		//liberar vector datos (pero reapuntar al auxiliar)
-		delete [] this->datos;
-		this->datos=NULL;
-
+	else{ //Si la dimension es mayor que cero 
+		//Si tienen la misma dimension -> FALSO
 		if(dimensionParam==this->dimension){
 			result=false;
 		}
-		else if(dimensionParam>this->dimension){
-			this->datos = new TPoro[dimensionParam];
+		else{  //Si la dimension es diferente
+			TPoro *vEmpty = new TPoro(); //Para rellenarla si es mayor la long
+			TPoro *vAux = new TPoro[dimensionParam]; //Vector auxiliars
 
-			for(long unsigned int i=0; i<this->dimension; i++){
-				this->datos[i]=vAux[i];
+			//Si la dimension nueva es mayor...
+			if(this->dimension < dimensionParam){
+				//Se insertan todos los elementos de nuestro vector
+				for(int i=0; i<this->dimension; i++){
+					if(i < this->dimension){
+						vAux[i]=this->datos[i];
+					}
+				} 
+				//Se insertan los elementos de relleno
+				for(int j=this->dimension; j<dimensionParam; j++){
+					vAux[j]=*vEmpty;
+				}
+				//Se asigna el nuevo vector resulatando al nuestro (this)
+				(*this).~TVectorPoro();   
+				this->dimension=dimensionParam;
+				this->datos=vAux;
+				result=true;  
 			}
-			for(long unsigned int j=dimension; j<dimensionParam; j++){
-				this->datos[j] = TPoro();
+			else{ //Si la dimension es menor...
+				for(int i=0; i<dimensionParam; i++){
+					vAux[i]=this->datos[i];
+				}
+				//Se asigna el nuevo vector resulatando al nuestro (this)
+				(*this).~TVectorPoro();  
+				this->dimension = dimensionParam; 
+				this->datos = vAux;		
+				result=true;
 			}
-			result = true;
 		}
-		else{ //dimensionAux<this->dimension
-			this->datos = new TPoro[dimensionParam];
-
-			for(long unsigned int i=0; i<dimensionParam; i++){
-				this->datos[i]=vAux[i];
-			}
-			result = true;
-		}
-	}	
-	return true;
+	}
+	return result;  
 }
 ostream& operator<<(ostream &os, const TVectorPoro &vporo){
 	os << "[";

@@ -1,4 +1,4 @@
-//Jose Burgos Miras
+//Jose Burgos Miras   48758447B
 //tvectorporo.h
 #ifndef _TVECTORPORO_H_
 #define _TVECTORPORO_H_
