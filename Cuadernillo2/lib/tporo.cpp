@@ -24,10 +24,7 @@ TPoro::TPoro(int a, int b, double vol, const char* orig){
 	
 	if(orig!=NULL){
 		this->color=new char[strlen(orig)+1];
-		int aux=0;
-		for(int i=0; i<=strlen(orig); i++){
-			this->color[i]=tolower(orig[i]);
-		}
+		strcpy(this->color, orig);
 	}
 	else{
 		this->color=NULL;
@@ -97,19 +94,7 @@ bool TPoro::operator==(const TPoro &poro){
 bool TPoro::operator!=(const TPoro &poro){
 	bool diferent=false;
 
-	if(this->x!=poro.x || this->y!=poro.y || this->volumen!=poro.volumen){
-		diferent=true;
-	}
-
-	if(this->color==NULL && poro.color==NULL){
-		diferent=false;
-	}
-	else if(this->color!=NULL && poro.color!=NULL){
-		if(strcmp(this->color, poro.color)!=0){ //Si son iguales
-			diferent=true;
-		}
-	}
-	else{
+	if(this->x!=poro.x || this->y!=poro.y || this->volumen!=poro.volumen || this->color!=poro.color){
 		diferent=true;
 	}
 
@@ -119,10 +104,7 @@ bool TPoro::operator!=(const TPoro &poro){
 void TPoro::Color(const char *col){
 	if(col!=NULL){
 		this->color=new char[strlen(col)+1];
-		int aux=0;
-		for(int i=0; i<=strlen(col); i++){
-			this->color[i]=tolower(col[i]);
-		}
+		strcpy(this->color, col);
 	}
 	else{
 		this->color=NULL;
